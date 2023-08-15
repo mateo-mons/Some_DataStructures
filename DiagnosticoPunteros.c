@@ -36,6 +36,12 @@ int main() {
 */
 
 // 2)
+/*  Haga un programa que calcule el area de un circulo,
+    definiendo el valor de pi, pero debe realizar
+    una funcion de calculo que reciba un parametro por valor
+    que corresponda al 'area' y un parametro por referencia
+    que corresponda al 'radio' para hacer dicho calculo    
+*/
 /*
 void calcula(float area, float *radio) {
 
@@ -66,6 +72,11 @@ int main() {
 
 
 // 3)
+/*  Haga un programa que calcule el area de un circulo, definiendo el 
+    valor de pi, pero debe realizar una funcion que reciba un parametro 'radio'
+    por referencia. Adentro de la funcion se debe definir el area
+    que será calculada y retornada despues del llamado a la funcion 
+*/
 /*
 float calcula(float *radio) {
 
@@ -96,6 +107,14 @@ int main() {
 
 
 // 4)
+/*  Haga un programa que calcule el area de un circulo, defina el valor 
+    de pi, pero debe realizar la creacion de una estructura con los tipos
+    de dato que tendrá el circulo 'area' y 'radio'. Debe definir una funcion
+    de calculo que reciba un parametro 'radio' por referencia, y en su interior 
+    definir la salida del area calculada.
+    Para el manejo de la funcion en el programa principal, se debe hacer uso 
+    de la estructura en la definicion de valores que seran trabajados. 
+*/
 /*
 struct d_circulo
 {
@@ -128,6 +147,13 @@ int main() {
 
 
 // 5)
+/*  Haga un programa que calcule el area de un circulo, defina el valor 
+    de pi, pero debe realizar la creacion de una estructura con los tipos
+    de dato que tendrá el circulo 'area' y 'radio'. Debe definir una funcion 
+    de calculo que reciba como referencia una estructura circulo, 
+    en su interior se debe hacer el manejo por punteros 
+    de los valores de la estructura para realizar el calculo de su area
+*/
 /*
 struct d_circulo
 {
