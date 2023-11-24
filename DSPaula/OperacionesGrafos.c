@@ -83,7 +83,7 @@ void RecorridoAnchura(Grafo *grafo, int inicio) {
 
 void RecorridoProfundidadRecursivo(Grafo *grafo, int vertice, int visitados[]) {
     visitados[vertice] = 1;
-    printf("%d . ", vertice + 1);
+    printf("(%d) ", vertice + 1);
 
     for(int i = 0; i < grafo->num_vertices; i++) {
         if(grafo->vertices[vertice][i] > 0 && !visitados[i]) {
@@ -98,12 +98,24 @@ void RecorridoProfundidad(Grafo *grafo, int inicio, int visitados[]) {
     printf("\n\n");
 }
 
+void ImprimirCamino(int padres[], int destino) {
+    if(padres[destino] == -1) {
+        printf("%d", destino + 1);
+        return;
+    }
+
+    ImprimirCamino(padres, padres[destino]);
+    printf(" -> %d", destino + 1);
+}
+
 void Dijkstra(Grafo *grafo, int inicio) {
     int distancia[MAX_VERTICES];
+    int padres[MAX_VERTICES];
     int visitados[MAX_VERTICES] = {0};
 
     for(int i = 0; i < grafo->num_vertices; i++) {
         distancia[i] = INT_MAX;
+        padres[i] = -1; // Inicializar todos los padres como -1
     }
 
     distancia[inicio] = 0;
@@ -111,6 +123,7 @@ void Dijkstra(Grafo *grafo, int inicio) {
     for(int count = 0; count < grafo->num_vertices - 1; count++) {
         int min = INT_MAX, min_index;
 
+        // Paso 1: Encuentra el vértice con la distancia mínima no incluido en el conjunto de nodos visitados
         for(int v = 0; v < grafo->num_vertices; v++) {
             if(!visitados[v] && distancia[v] <= min) {
                 min = distancia[v];
@@ -118,22 +131,29 @@ void Dijkstra(Grafo *grafo, int inicio) {
             }
         }
 
+        // Paso 2: Marca el vértice seleccionado como visitado
         visitados[min_index] = 1;
 
+        // Paso 3: Actualiza las distancias de los vértices adyacentes al vértice seleccionado
         for(int v = 0; v < grafo->num_vertices; v++) {
             if(!visitados[v] && grafo->vertices[min_index][v] &&
                 distancia[min_index] != INT_MAX &&
                 distancia[min_index] + grafo->vertices[min_index][v] < distancia[v]) {
                 distancia[v] = distancia[min_index] + grafo->vertices[min_index][v];
+                padres[v] = min_index;
             }
         }
     }
 
-    printf("Distancias más cortas desde el vértice %d:\n", inicio + 1);
+    // Imprime las distancias finales
+    printf("Dijkstra desde el vertice %d:\n", inicio + 1);
     for(int i = 0; i < grafo->num_vertices; i++) {
-        printf("(%d, %d): %d\n", i + 1, i + 1, distancia[i]);
+        printf("(%d, %d): %d, Camino: ", inicio + 1, i + 1, distancia[i]);
+        ImprimirCamino(padres, i);
+        printf("\n");
     }
 }
+
 
 int main() {
     Grafo grafo;
@@ -147,7 +167,7 @@ int main() {
     printf("Ingrese las relaciones entre vertices (origen destino peso), finalice con 0 0 0:\n");
     while(1) {
         scanf("%d %d %d", &origen, &destino, &peso);
-        if(origen == 0 || destino == 0 || peso == 0) {
+        if(origen == 0 || destino == 0 || peso == 0) { // Condición de parada de ingreso de las relaciones
             break;
         }
         AgregarArista(&grafo, origen - 1, destino - 1, peso);
@@ -168,3 +188,6 @@ int main() {
 
     return 0;
 }
+
+
+
